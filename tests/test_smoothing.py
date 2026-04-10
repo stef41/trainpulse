@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import math
-
 import pytest
 
 from trainpulse.smoothing import (
@@ -13,7 +11,6 @@ from trainpulse.smoothing import (
     compare_methods,
     format_smoothing_report,
 )
-
 
 # ------------------------------------------------------------------
 # SmoothingConfig / SmoothedSeries dataclasses

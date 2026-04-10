@@ -1,6 +1,5 @@
 """Tests for _types module."""
 
-import pytest
 from trainpulse._types import (
     Alert,
     AlertSeverity,

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 from trainpulse._types import Alert
 
@@ -25,8 +25,8 @@ class WandbCallback:
     def __init__(
         self,
         project: str = "trainpulse",
-        run_name: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None,
+        run_name: str | None = None,
+        config: dict[str, Any] | None = None,
         enabled: bool = True,
     ) -> None:
         self._project = project
@@ -55,7 +55,7 @@ class WandbCallback:
         )
         return self._wandb
 
-    def on_step(self, step: int, metrics: Dict[str, float]) -> None:
+    def on_step(self, step: int, metrics: dict[str, float]) -> None:
         """Log per-step metrics to W&B."""
         if not self._enabled:
             return
@@ -72,7 +72,7 @@ class WandbCallback:
             text=alert.message,
         )
 
-    def on_epoch_end(self, epoch: int, metrics: Dict[str, float]) -> None:
+    def on_epoch_end(self, epoch: int, metrics: dict[str, float]) -> None:
         """Log epoch-level summary metrics to W&B."""
         if not self._enabled:
             return

@@ -1,9 +1,9 @@
 """Tests for monitor module."""
 
-import math
 import pytest
-from trainpulse._types import Alert, AlertSeverity, MonitorConfig, MetricType
-from trainpulse.monitor import Monitor, _infer_metric_type, _compute_health_score
+
+from trainpulse._types import Alert, AlertSeverity, MetricType, MonitorConfig
+from trainpulse.monitor import Monitor, _compute_health_score, _infer_metric_type
 
 
 class TestInferMetricType:

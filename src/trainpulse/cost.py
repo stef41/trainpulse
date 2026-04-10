@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
 
 
 @dataclass
@@ -45,7 +44,7 @@ class TrainingEstimate:
 # Default tokens/second look-up (single-GPU baseline for 7B-class models)
 # ---------------------------------------------------------------------------
 
-_DEFAULT_TPS: Dict[str, float] = {
+_DEFAULT_TPS: dict[str, float] = {
     "H100": 12_000.0,
     "A100_80GB": 6_000.0,
     "A100_40GB": 5_000.0,
@@ -61,7 +60,7 @@ _DEFAULT_TPS: Dict[str, float] = {
 # Pre-defined hardware profiles
 # ---------------------------------------------------------------------------
 
-COMMON_HARDWARE: Dict[str, HardwareProfile] = {
+COMMON_HARDWARE: dict[str, HardwareProfile] = {
     "H100": HardwareProfile(
         name="H100",
         gpu_type="H100",
@@ -127,7 +126,7 @@ class CostEstimator:
     def __init__(self, hardware: HardwareProfile) -> None:
         self.hardware = hardware
 
-    def _resolve_tps(self, tokens_per_second: Optional[float] = None) -> float:
+    def _resolve_tps(self, tokens_per_second: float | None = None) -> float:
         if tokens_per_second is not None:
             return tokens_per_second
         base = _DEFAULT_TPS.get(self.hardware.gpu_type, 2_000.0)
@@ -136,7 +135,7 @@ class CostEstimator:
     def estimate_training(
         self,
         total_tokens: int,
-        tokens_per_second: Optional[float] = None,
+        tokens_per_second: float | None = None,
         epochs: int = 1,
     ) -> TrainingEstimate:
         """Estimate cost for processing *total_tokens* over *epochs* epochs."""
@@ -189,13 +188,13 @@ class CostEstimator:
 
     @staticmethod
     def compare_hardware(
-        profiles: List[HardwareProfile],
+        profiles: list[HardwareProfile],
         total_tokens: int,
-        tokens_per_second: Optional[float] = None,
+        tokens_per_second: float | None = None,
         epochs: int = 1,
-    ) -> List[TrainingEstimate]:
+    ) -> list[TrainingEstimate]:
         """Compare estimates across multiple hardware profiles."""
-        results: List[TrainingEstimate] = []
+        results: list[TrainingEstimate] = []
         for profile in profiles:
             est = CostEstimator(profile)
             results.append(
@@ -208,7 +207,7 @@ class CostEstimator:
 # Report formatting
 # ---------------------------------------------------------------------------
 
-def format_cost_report(estimates: List[TrainingEstimate] | TrainingEstimate) -> str:
+def format_cost_report(estimates: list[TrainingEstimate] | TrainingEstimate) -> str:
     """Format one or more estimates as a human-readable report."""
     if isinstance(estimates, TrainingEstimate):
         estimates = [estimates]

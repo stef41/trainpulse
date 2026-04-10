@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import time
-from typing import Dict, List, Optional
 
 from trainpulse._types import (
     Alert,
@@ -35,10 +34,10 @@ class Monitor:
         report = monitor.report()
     """
 
-    def __init__(self, config: Optional[MonitorConfig] = None) -> None:
+    def __init__(self, config: MonitorConfig | None = None) -> None:
         self._config = config or MonitorConfig()
-        self._snapshots: Dict[str, List[MetricSnapshot]] = {}
-        self._alerts: List[Alert] = []
+        self._snapshots: dict[str, list[MetricSnapshot]] = {}
+        self._alerts: list[Alert] = []
         self._step_count = 0
 
         # Detectors
@@ -64,24 +63,24 @@ class Monitor:
         )
 
         # Step timer
-        self._last_step_time: Optional[float] = None
+        self._last_step_time: float | None = None
 
     @property
     def config(self) -> MonitorConfig:
         return self._config
 
     @property
-    def alerts(self) -> List[Alert]:
+    def alerts(self) -> list[Alert]:
         return list(self._alerts)
 
     @property
-    def snapshots(self) -> Dict[str, List[MetricSnapshot]]:
+    def snapshots(self) -> dict[str, list[MetricSnapshot]]:
         return dict(self._snapshots)
 
-    def log(self, name: str, step: int, value: float, **metadata: object) -> List[Alert]:
+    def log(self, name: str, step: int, value: float, **metadata: object) -> list[Alert]:
         """Log a metric value. Returns any alerts triggered."""
         self._step_count = max(self._step_count, step + 1)
-        new_alerts: List[Alert] = []
+        new_alerts: list[Alert] = []
 
         # NaN/Inf check
         if self._nan_detector is not None:
@@ -134,7 +133,7 @@ class Monitor:
         """Mark the beginning of a training step for timing."""
         self._last_step_time = time.monotonic()
 
-    def step_end(self, step: int) -> List[Alert]:
+    def step_end(self, step: int) -> list[Alert]:
         """Mark the end of a training step and log the duration."""
         if self._last_step_time is None:
             return []
@@ -144,7 +143,7 @@ class Monitor:
 
     def report(self) -> TrainingReport:
         """Generate a training health report."""
-        metrics_summary: Dict[str, Dict[str, float]] = {}
+        metrics_summary: dict[str, dict[str, float]] = {}
         for name, snaps in self._snapshots.items():
             vals = [s.value for s in snaps]
             finite = [v for v in vals if _is_finite(v)]
@@ -191,7 +190,7 @@ def _infer_metric_type(name: str) -> MetricType:
         return MetricType.LOSS
     if "grad" in low and ("norm" in low or "magnitude" in low):
         return MetricType.GRADIENT_NORM
-    if low in ("lr", "learning_rate") or "lr" == low:
+    if low in ("lr", "learning_rate") or low == "lr":
         return MetricType.LEARNING_RATE
     if "step_time" in low or "iteration_time" in low:
         return MetricType.STEP_TIME
@@ -206,7 +205,7 @@ def _is_finite(v: float) -> bool:
     return not (math.isnan(v) or math.isinf(v))
 
 
-def _compute_health_score(alerts: List[Alert], total_steps: int) -> float:
+def _compute_health_score(alerts: list[Alert], total_steps: int) -> float:
     """Compute a 0-1 health score based on alerts."""
     if total_steps == 0:
         return 1.0

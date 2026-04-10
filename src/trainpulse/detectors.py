@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 import math
-from typing import List, Optional, Sequence
 
-from trainpulse._types import Alert, AlertSeverity, MetricType
+from trainpulse._types import Alert, AlertSeverity
 
 
 class RollingWindow:
@@ -21,7 +20,7 @@ class RollingWindow:
             self._values.pop(0)
 
     @property
-    def values(self) -> List[float]:
+    def values(self) -> list[float]:
         return list(self._values)
 
     @property
@@ -48,7 +47,7 @@ class RollingWindow:
 class NaNDetector:
     """Detect NaN or Inf values in metrics."""
 
-    def check(self, step: int, name: str, value: float) -> Optional[Alert]:
+    def check(self, step: int, name: str, value: float) -> Alert | None:
         if math.isnan(value):
             return Alert(
                 step=step,
@@ -77,7 +76,7 @@ class LossSpikeDetector:
         self._threshold = threshold
         self._window = RollingWindow(window_size)
 
-    def check(self, step: int, value: float) -> Optional[Alert]:
+    def check(self, step: int, value: float) -> Alert | None:
         if self._window.is_full:
             avg = self._window.mean
             if avg > 0 and value > avg * self._threshold:
@@ -107,7 +106,7 @@ class GradientDetector:
         self._explosion = explosion_threshold
         self._vanish = vanish_threshold
 
-    def check(self, step: int, grad_norm: float) -> Optional[Alert]:
+    def check(self, step: int, grad_norm: float) -> Alert | None:
         if grad_norm > self._explosion:
             return Alert(
                 step=step,
@@ -134,9 +133,9 @@ class LRDetector:
 
     def __init__(self, change_threshold: float = 10.0) -> None:
         self._threshold = change_threshold
-        self._prev_lr: Optional[float] = None
+        self._prev_lr: float | None = None
 
-    def check(self, step: int, lr: float) -> Optional[Alert]:
+    def check(self, step: int, lr: float) -> Alert | None:
         if self._prev_lr is not None and self._prev_lr > 0 and lr > 0:
             ratio = max(lr / self._prev_lr, self._prev_lr / lr)
             if ratio > self._threshold:
@@ -160,11 +159,11 @@ class PlateauDetector:
     def __init__(self, patience: int = 100, min_delta: float = 1e-5) -> None:
         self._patience = patience
         self._min_delta = min_delta
-        self._best_loss: Optional[float] = None
+        self._best_loss: float | None = None
         self._steps_without_improvement = 0
         self._alerted = False
 
-    def check(self, step: int, loss: float) -> Optional[Alert]:
+    def check(self, step: int, loss: float) -> Alert | None:
         if self._best_loss is None:
             self._best_loss = loss
             return None
@@ -197,7 +196,7 @@ class StepTimeDetector:
         self._threshold = threshold
         self._window = RollingWindow(window_size)
 
-    def check(self, step: int, step_time: float) -> Optional[Alert]:
+    def check(self, step: int, step_time: float) -> Alert | None:
         if self._window.is_full:
             avg = self._window.mean
             if avg > 0 and step_time > avg * self._threshold:

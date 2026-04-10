@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import sys
 from types import ModuleType
-from typing import Any, Dict, List
 from unittest.mock import MagicMock, patch
 
 import pytest

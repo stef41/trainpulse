@@ -1,7 +1,6 @@
 """Tests for callbacks module."""
 
-import pytest
-from trainpulse._types import AlertSeverity, MonitorConfig
+from trainpulse._types import MonitorConfig
 from trainpulse.callbacks import TrainingCallback
 
 

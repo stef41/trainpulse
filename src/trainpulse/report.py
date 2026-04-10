@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
-from trainpulse._types import Alert, AlertSeverity, TrainingReport
+from trainpulse._types import AlertSeverity, TrainingReport
 
 
-def report_to_dict(report: TrainingReport) -> Dict[str, Any]:
+def report_to_dict(report: TrainingReport) -> dict[str, Any]:
     """Convert a report to a JSON-serializable dict."""
     return {
         "total_steps": report.total_steps,
@@ -37,14 +37,14 @@ def save_json(report: TrainingReport, path: str | Path) -> None:
     Path(path).write_text(json.dumps(report_to_dict(report), indent=2))
 
 
-def load_json(path: str | Path) -> Dict[str, Any]:
+def load_json(path: str | Path) -> dict[str, Any]:
     """Load a report dict from JSON."""
     return json.loads(Path(path).read_text())  # type: ignore[no-any-return]
 
 
 def format_report_text(report: TrainingReport) -> str:
     """Format report as plain text."""
-    lines: List[str] = []
+    lines: list[str] = []
     lines.append("=" * 60)
     lines.append("TRAINING HEALTH REPORT")
     lines.append("=" * 60)

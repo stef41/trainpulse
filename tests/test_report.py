@@ -1,8 +1,7 @@
 """Tests for report module."""
 
 import json
-import pytest
-from pathlib import Path
+
 from trainpulse._types import Alert, AlertSeverity, TrainingReport
 from trainpulse.report import (
     format_report_rich,

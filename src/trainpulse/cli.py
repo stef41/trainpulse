@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Optional
 
 
 def _build_cli():  # type: ignore[no-untyped-def]
@@ -31,7 +30,7 @@ def _build_cli():  # type: ignore[no-untyped-def]
     @click.option("--step-key", default="step", help="Key for step number.")
     def analyze(
         log_file: str,
-        json_out: Optional[str],
+        json_out: str | None,
         loss_key: str,
         grad_key: str,
         lr_key: str,

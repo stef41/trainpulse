@@ -1,12 +1,12 @@
 """Tests for detectors module."""
 
-import math
 import pytest
+
 from trainpulse._types import AlertSeverity
 from trainpulse.detectors import (
     GradientDetector,
-    LRDetector,
     LossSpikeDetector,
+    LRDetector,
     NaNDetector,
     PlateauDetector,
     RollingWindow,
@@ -129,7 +129,7 @@ class TestLossSpikeDetector:
         d = LossSpikeDetector(threshold=2.0, window_size=3)
         for i in range(3):
             d.check(i, 1.0)
-        # Exactly 2x is NOT a spike (> not >=)  
+        # Exactly 2x is NOT a spike (> not >=)
         assert d.check(3, 2.0) is None
         # But 2.1x is
         d2 = LossSpikeDetector(threshold=2.0, window_size=3)

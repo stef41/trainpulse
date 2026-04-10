@@ -1,9 +1,10 @@
 """Tests for CLI module."""
 
 import json
+
 import pytest
-from pathlib import Path
 from click.testing import CliRunner
+
 from trainpulse.cli import _build_cli
 
 

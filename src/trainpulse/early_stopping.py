@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Literal
+from typing import Literal
 
 
 @dataclass
@@ -111,7 +111,7 @@ class EarlyStopping:
         return value > self._best_value + self._min_delta
 
 
-def recommend_patience(loss_history: List[float]) -> int:
+def recommend_patience(loss_history: list[float]) -> int:
     """Heuristic that recommends a patience value from a loss curve.
 
     The recommendation is based on the typical gap (in steps) between

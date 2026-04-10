@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable
 
 
 class AlertSeverity(str, Enum):
@@ -30,7 +30,7 @@ class MetricSnapshot:
     name: str
     value: float
     metric_type: MetricType = MetricType.CUSTOM
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -76,7 +76,7 @@ class MonitorConfig:
 
     # General
     log_interval: int = 1  # Record every N steps
-    alert_callbacks: List[Callable[[Alert], None]] = field(default_factory=list)
+    alert_callbacks: list[Callable[[Alert], None]] = field(default_factory=list)
 
 
 @dataclass
@@ -84,8 +84,8 @@ class TrainingReport:
     """Summary report of training health."""
 
     total_steps: int
-    alerts: List[Alert]
-    metrics_summary: Dict[str, Dict[str, float]]  # metric_name -> {min, max, mean, last}
+    alerts: list[Alert]
+    metrics_summary: dict[str, dict[str, float]]  # metric_name -> {min, max, mean, last}
     health_score: float  # 0.0 (terrible) to 1.0 (perfect)
 
     @property

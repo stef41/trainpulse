@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from trainpulse._types import MonitorConfig
 from trainpulse.monitor import Monitor
@@ -22,7 +22,7 @@ class TrainingCallback:
         report = cb.report()
     """
 
-    def __init__(self, config: Optional[MonitorConfig] = None) -> None:
+    def __init__(self, config: MonitorConfig | None = None) -> None:
         self.monitor = Monitor(config)
 
     def on_step_begin(self, step: int) -> None:
@@ -31,9 +31,9 @@ class TrainingCallback:
     def on_step_end(
         self,
         step: int,
-        loss: Optional[float] = None,
-        grad_norm: Optional[float] = None,
-        lr: Optional[float] = None,
+        loss: float | None = None,
+        grad_norm: float | None = None,
+        lr: float | None = None,
         **extra_metrics: float,
     ) -> None:
         self.monitor.step_end(step)
@@ -67,7 +67,7 @@ def make_pytorch_hooks(
             h.remove()
     """
     try:
-        import torch  # type: ignore[import-untyped]
+        import torch  # type: ignore[import-untyped]  # noqa: F401
     except ImportError:
         raise ImportError("PyTorch is required: pip install trainpulse[torch]")
 
@@ -107,7 +107,7 @@ def make_pytorch_hooks(
 
 
 def make_hf_callback(
-    config: Optional[MonitorConfig] = None,
+    config: MonitorConfig | None = None,
 ) -> Any:
     """Create a HuggingFace Trainer callback.
 
@@ -124,7 +124,12 @@ def make_hf_callback(
     Returns a TrainerCallback subclass instance.
     """
     try:
-        from transformers import TrainerCallback, TrainerControl, TrainerState, TrainingArguments  # type: ignore[import-untyped]
+        from transformers import (  # type: ignore[import-untyped]
+            TrainerCallback,
+            TrainerControl,
+            TrainerState,
+            TrainingArguments,
+        )
     except ImportError:
         raise ImportError(
             "HuggingFace transformers is required: pip install transformers"
@@ -150,7 +155,7 @@ def make_hf_callback(
             args: TrainingArguments,
             state: TrainerState,
             control: TrainerControl,
-            logs: Optional[dict] = None,
+            logs: dict | None = None,
             **kwargs: Any,
         ) -> None:
             if logs is None:

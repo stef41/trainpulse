@@ -6,7 +6,6 @@ import pytest
 
 from trainpulse.early_stopping import EarlyStopping, EarlyStopResult, recommend_patience
 
-
 # ──────────────────────────────────────────────────────────────────────
 # EarlyStopResult dataclass
 # ──────────────────────────────────────────────────────────────────────
