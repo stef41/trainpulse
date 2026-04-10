@@ -53,7 +53,7 @@ class TrainingCallback:
 def make_pytorch_hooks(
     model: Any,
     monitor: Monitor,
-) -> list:
+) -> list[Any]:
     """Register backward hooks on a PyTorch model to track gradient norms.
 
     Returns a list of hook handles for cleanup.
@@ -91,7 +91,7 @@ def make_pytorch_hooks(
     class _HookManager:
         """Manages hooks and step counter."""
 
-        def __init__(self, handles: list, counter: dict) -> None:
+        def __init__(self, handles: list[Any], counter: dict[str, Any]) -> None:
             self._handles = handles
             self._counter = counter
 
