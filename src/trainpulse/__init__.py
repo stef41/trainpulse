@@ -12,6 +12,7 @@ from trainpulse._types import (
 from trainpulse.callbacks import TrainingCallback
 from trainpulse.early_stopping import EarlyStopping, EarlyStopResult, recommend_patience
 from trainpulse.monitor import Monitor
+from trainpulse.wandb_callback import WandbCallback
 
 __all__ = [
     "Alert",
@@ -25,5 +26,6 @@ __all__ = [
     "TrainingCallback",
     "TrainingReport",
     "TrainpulseError",
+    "WandbCallback",
     "recommend_patience",
 ]
