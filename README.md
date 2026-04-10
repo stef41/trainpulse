@@ -1,5 +1,9 @@
 # trainpulse
 
+[![CI](https://github.com/stef41/trainpulse/actions/workflows/ci.yml/badge.svg)](https://github.com/stef41/trainpulse/actions/workflows/ci.yml)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Lightweight training health monitor. Detect loss spikes, gradient explosions, NaN/Inf, and plateaus — 2 lines of code, no server, no signup.
 
 <p align="center">
