@@ -1,5 +1,7 @@
 """trainpulse — lightweight training health monitor."""
 
+__version__ = "0.2.0"
+
 from trainpulse._types import (
     Alert,
     AlertSeverity,
