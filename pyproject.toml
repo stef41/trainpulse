@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trainpulse"
+version = "0.1.0"
+description = "Lightweight training health monitor. Detect loss spikes, gradient explosions, and NaN — 2 lines of code, no server, no signup."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.9"
+authors = [{ name = "Zacharie Bhatti" }]
+keywords = [
+    "training",
+    "monitoring",
+    "deep-learning",
+    "gradient",
+    "loss",
+    "pytorch",
+    "machine-learning",
+    "health-check",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+torch = ["torch>=2.0"]
+cli = ["click>=8.0", "rich>=13.0"]
+all = ["trainpulse[torch,cli]"]
+
+[project.urls]
+Homepage = "https://github.com/stef41/trainpulse"
+Repository = "https://github.com/stef41/trainpulse"
+Issues = "https://github.com/stef41/trainpulse/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trainpulse"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 99
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
