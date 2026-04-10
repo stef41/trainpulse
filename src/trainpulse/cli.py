@@ -5,9 +5,10 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 
-def _build_cli():  # type: ignore[no-untyped-def]
+def _build_cli() -> Any:
     """Build the CLI. Deferred import so click/rich are optional."""
     try:
         import click

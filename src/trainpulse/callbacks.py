@@ -137,7 +137,7 @@ def make_hf_callback(
 
     monitor = Monitor(config)
 
-    class _TrainpulseCallback(TrainerCallback):
+    class _TrainpulseCallback(TrainerCallback):  # type: ignore[misc]
         def __init__(self) -> None:
             self.trainpulse_monitor = monitor
 
