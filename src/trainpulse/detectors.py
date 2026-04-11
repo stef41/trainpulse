@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from collections import deque
 
 from trainpulse._types import Alert, AlertSeverity
 
@@ -12,12 +13,10 @@ class RollingWindow:
 
     def __init__(self, size: int) -> None:
         self._size = max(size, 1)
-        self._values: list[float] = []
+        self._values: deque[float] = deque(maxlen=self._size)
 
     def add(self, value: float) -> None:
         self._values.append(value)
-        if len(self._values) > self._size:
-            self._values.pop(0)
 
     @property
     def values(self) -> list[float]:
