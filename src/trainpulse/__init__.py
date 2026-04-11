@@ -1,6 +1,6 @@
 """trainpulse — lightweight training health monitor."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 from trainpulse._types import (
     Alert,
@@ -29,6 +29,14 @@ from trainpulse.smoothing import (
     format_smoothing_report,
 )
 from trainpulse.wandb_callback import WandbCallback
+from trainpulse.spectral import spectral_analysis, SpectralResult, FrequencyComponent
+from trainpulse.statistical import (
+    mann_kendall,
+    MannKendallResult,
+    isolation_forest,
+    IsolationForestResult,
+    AnomalyScore,
+)
 
 __all__ = [
     "Alert",
@@ -56,4 +64,14 @@ __all__ = [
     "SmoothingConfig",
     "compare_methods",
     "format_smoothing_report",
+    # Spectral analysis
+    "spectral_analysis",
+    "SpectralResult",
+    "FrequencyComponent",
+    # Statistical tests
+    "mann_kendall",
+    "MannKendallResult",
+    "isolation_forest",
+    "IsolationForestResult",
+    "AnomalyScore",
 ]

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "trainpulse"
-version = "0.3.0"
+version = "0.4.0"
 description = "Lightweight training health monitor. Detect loss spikes, gradient explosions, and NaN — 2 lines of code, no server, no signup."
 readme = "README.md"
 license = {text = "Apache-2.0"}
