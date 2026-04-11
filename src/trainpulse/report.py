@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -24,7 +25,7 @@ def report_to_dict(report: TrainingReport) -> dict[str, Any]:
                 "detector": a.detector,
                 "message": a.message,
                 "metric_name": a.metric_name,
-                "metric_value": a.metric_value,
+                "metric_value": a.metric_value if math.isfinite(a.metric_value) else None,
             }
             for a in report.alerts
         ],
